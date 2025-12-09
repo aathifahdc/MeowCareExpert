@@ -1,0 +1,551 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    background: linear-gradient(135deg, #FFF8E9 0%, #FFE8CC 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #4A3728;
+    min-height: 100vh;
+    padding-bottom: 30px;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    background: linear-gradient(135deg, #ffffff 0%, #fffbf5 100%);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(212, 195, 174, 0.25);
+    margin-top: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.container:hover {
+    box-shadow: 0 20px 60px rgba(212, 195, 174, 0.35);
+    transform: translateY(-5px);
+}
+
+h1 {
+    color: #C28F5A;
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+h2, h3, h4, h5 {
+    color: #C28F5A;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+p {
+    line-height: 1.6;
+    color: #6B4F3A;
+}
+
+button, .btn-primary, .btn-secondary {
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(194, 143, 90, 0.2);
+}
+
+button:hover, .btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(194, 143, 90, 0.35);
+}
+
+button:active, .btn-primary:active, .btn-secondary:active {
+    transform: translateY(0);
+}
+
+button, .btn-primary {
+    background: linear-gradient(135deg, #E7C29F 0%, #D9AE84 100%);
+    color: #4A3728;
+}
+
+button:hover, .btn-primary:hover {
+    background: linear-gradient(135deg, #D9AE84 0%, #CB9A6F 100%);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #F4E2C6 0%, #EDD1B2 100%);
+    color: #6B4F3A;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #EDD1B2 0%, #E6BFA6 100%);
+}
+
+.hero {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+}
+
+.cat-hero {
+    width: 160px;
+    height: auto;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.hero p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6B4F3A;
+    margin-bottom: 30px;
+}
+
+/* Alert */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Symptoms Grid */
+.symptoms-container {
+    margin: 30px 0;
+}
+
+.symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.symptom-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #fafafa;
+    border: 2px solid #f0e6d7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.symptom-item:hover {
+    background: #fff8e9;
+    border-color: #C28F5A;
+    box-shadow: 0 4px 12px rgba(194, 143, 90, 0.15);
+}
+
+.symptom-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #C28F5A;
+}
+
+.symptom-item label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.symptom-code {
+    font-weight: 600;
+    color: #C28F5A;
+    font-size: 13px;
+}
+
+.symptom-name {
+    color: #4A3728;
+    font-size: 14px;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0 16px 0;
+    border: 2px solid #E7C29F;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    background: #fffbf5;
+    color: #4A3728;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #C28F5A;
+    box-shadow: 0 0 0 4px rgba(194, 143, 90, 0.1);
+    background: #fff;
+}
+
+.checkbox {
+    display: block;
+    padding: 12px 0;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.form-actions button,
+.form-actions a {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Diagnosis Form */
+.diagnosa-form {
+    margin: 20px 0;
+}
+
+/* Result Box */
+.result-box {
+    background: linear-gradient(135deg, #FFEFD4 0%, #FFE5BC 100%);
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 18px;
+    border-left: 6px solid #C28F5A;
+    box-shadow: 0 6px 20px rgba(194, 143, 90, 0.2);
+    margin: 20px 0;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.result-box:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(194, 143, 90, 0.3);
+}
+
+/* Disease Card */
+.disease-card {
+    background: linear-gradient(135deg, #fff8e9 0%, #ffe8cc 100%);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 6px 20px rgba(194, 143, 90, 0.15);
+    border: 2px solid rgba(194, 143, 90, 0.1);
+    transition: all 0.3s ease;
+}
+
+.disease-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(194, 143, 90, 0.25);
+}
+
+.disease-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.disease-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    flex: 1;
+}
+
+.rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: #C28F5A;
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.match-badge {
+    background: linear-gradient(135deg, #C28F5A 0%, #B37D47 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Match Progress Bar */
+.match-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0d5c7;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.match-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #C28F5A 0%, #E7C29F 100%);
+    border-radius: 10px;
+    transition: width 0.8s ease;
+}
+
+/* Disease Description */
+.disease-description {
+    margin: 15px 0;
+}
+
+.disease-description h5 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.disease-description p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6B4F3A;
+}
+
+/* Disease Info */
+.disease-info {
+    background: rgba(194, 143, 90, 0.1);
+    padding: 12px 15px;
+    border-radius: 10px;
+    border-left: 4px solid #C28F5A;
+    margin-top: 15px;
+}
+
+.disease-info p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Tags */
+.tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5D7B4 0%, #EEC9A3 100%);
+    padding: 8px 14px;
+    margin: 6px 6px 6px 0;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(194, 143, 90, 0.15);
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(194, 143, 90, 0.25);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+/* Table */
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(212, 195, 174, 0.15);
+}
+
+table th {
+    background: linear-gradient(135deg, #EFD9C0 0%, #E6CCAD 100%);
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #4A3728;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0e6d7;
+}
+
+table tr:hover {
+    background: #fffbf5;
+    transition: background 0.2s ease;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.symptoms-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* Gejala Info */
+.gejala-info {
+    background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border-left: 5px solid #C28F5A;
+}
+
+.gejala-info h3 {
+    margin-top: 0;
+}
+
+/* Hasil Container */
+.hasil-container {
+    margin: 30px 0;
+}
+
+.hasil-container h3 {
+    margin-top: 0;
+}
+
+/* History Table Wrapper */
+.history-table-wrapper {
+    overflow-x: auto;
+}
+
+/* Link styling */
+a {
+    color: #C28F5A;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .cat-hero {
+        width: 120px;
+    }
+
+    .symptoms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .disease-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .disease-header h4 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .match-badge {
+        align-self: flex-start;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    table th,
+    table td {
+        padding: 10px;
+    }
+
+    button, .btn-primary, .btn-secondary {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button,
+    .form-actions a {
+        width: 100%;
+    }
+}
