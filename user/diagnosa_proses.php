@@ -2,6 +2,7 @@
 session_start();
 require_once "../inc/config.php";
 
+// Tidak perlu login untuk melakukan diagnosa
 if (!isset($_POST['gejala']) || empty($_POST['gejala'])) {
     $_SESSION['error'] = "Pilih minimal satu gejala!";
     header("Location: diagnosa.php");
@@ -9,7 +10,10 @@ if (!isset($_POST['gejala']) || empty($_POST['gejala'])) {
 }
 
 $selected = $_POST['gejala']; // array id gejala
-$selected_str = implode(",", $selected);
+$selected_count = count($selected);
+
+// Debug: Log selected symptoms
+error_log("Selected symptoms: " . implode(",", $selected));
 
 // Ambil semua rule dengan detail penyakit
 $query = $pdo->query("
@@ -21,6 +25,8 @@ $query = $pdo->query("
 ");
 $rules = $query->fetchAll(PDO::FETCH_ASSOC);
 
+error_log("Total rules found: " . count($rules));
+
 $hasil = [];
 foreach ($rules as $r) {
     // Ambil gejala dalam rule
@@ -28,53 +34,52 @@ foreach ($rules as $r) {
         SELECT symptom_id FROM rule_condition WHERE rule_id=?
     ");
     $conds->execute([$r['rule_id']]);
-    $conds = $conds->fetchAll(PDO::FETCH_COLUMN);
+    $rule_symptoms = $conds->fetchAll(PDO::FETCH_COLUMN);
 
-    // Cek apakah semua gejala dalam rule ada dalam input
-    // dan hitung percentage match
-    $match_count = count(array_intersect($conds, $selected));
-    $total_symptoms = count($conds);
+    error_log("Rule {$r['disease_code']}: Found " . count($rule_symptoms) . " symptoms in database");
+
+    // Hitung berapa banyak gejala user yang cocok dengan gejala rule
+    $match_count = count(array_intersect($rule_symptoms, $selected));
+    $rule_symptom_count = count($rule_symptoms);
     
-    if ($total_symptoms > 0) {
-        $match_percentage = ($match_count / $total_symptoms) * 100;
+    if ($rule_symptom_count > 0) {
+        // Persentase: berapa % gejala rule yang dipenuhi oleh user
+        $match_percentage = ($match_count / $rule_symptom_count) * 100;
         
-        // Hanya accept jika minimal match 70% atau semua gejala cocok
-        if ($match_percentage >= 70) {
+        error_log("Rule {$r['disease_code']}: Match {$match_count}/{$rule_symptom_count} = {$match_percentage}%");
+        
+        // Hanya accept jika minimal match 50% (lebih realistis)
+        if ($match_percentage >= 50) {
             $hasil[] = [
                 'disease_id' => $r['disease_id'],
                 'disease_code' => $r['disease_code'],
                 'disease_name' => $r['disease_name'],
                 'description' => $r['description'],
-                'match_percentage' => $match_percentage
+                'match_percentage' => round($match_percentage, 2),
+                'matched_symptoms' => $match_count,
+                'total_symptoms' => $rule_symptom_count
             ];
         }
     }
 }
+
+error_log("Total results with >= 50% match: " . count($hasil));
 
 // Sort by match percentage descending
 usort($hasil, function($a, $b) {
     return $b['match_percentage'] - $a['match_percentage'];
 });
 
-// Jika tidak ada rule match
+// Jika tidak ada hasil, tampilkan pesan
 if (empty($hasil)) {
-    $hasilText = "Tidak ada penyakit yang cocok dengan gejala yang dipilih.";
-} else {
-    $hasilText = json_encode($hasil);
-}
-
-// Simpan ke riwayat
-try {
-    $stmt = $pdo->prepare("INSERT INTO history (symptoms, result, created_at) VALUES (?, ?, NOW())");
-    $stmt->execute([$selected_str, $hasilText]);
-} catch (PDOException $e) {
-    // Database error handling
+    error_log("No diseases matched - redirecting to diagnosa with error message");
+    $_SESSION['error'] = "Tidak ada penyakit yang cocok dengan gejala yang dipilih (threshold 50%). Coba pilih gejala lain atau konsultasi dengan dokter hewan.";
+    header("Location: diagnosa.php");
+    exit;
 }
 
 $_SESSION['hasil'] = $hasil;
 $_SESSION['gejala_dipilih'] = $selected;
 
-header("Location: hasil.php");
-exit;
 header("Location: hasil.php");
 exit;
